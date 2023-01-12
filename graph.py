@@ -1,53 +1,78 @@
+# Author: Adam Peters
+# Date Started
+
 import string
 import networkx as nx
+import csv
 
 
+# A Place Object that is used as node in the story graph
+# currently stores the name and description
+#----------------------------------------------------------------
+# In the future it will store information about the items
+# that can be found there and more
 class Place:
     def __init__(self, name: string, description: string):
         self.name = name
         self.description = description
 
+    def __str__(self):
+        return f"{self.description}"
 
+# A Story object holds the graph for each seperate text adventure story
+# where the nodes are Place Objects
 class Story:
-    places = [
-        Place("Road", "You are by a road"),
-        Place("Forest", "You are in a forest"),
-    ]
+    # Graph to hold each place that you can travel to in the game
+    places = nx.Graph()
 
-    def add_place(self, place):
-        self.places.append(self, place)
+    # Takes a normal (not UTF8), properly formatted (see top) file
+    def load_csv(self):
+        with open("./story.csv", 'r') as file:
+            csvreader = csv.DictReader(file)
+            for row in csvreader:
+                self.places.add_node(Place(row['Places'], row['Description']))
+
+    def add_edges(self, edges):
+        with open("./story.csv", 'r') as file:
+            csvreader = csv.DictReader(file)
+            for row in csvreader:
+                turd = row['Connections'].split(', ')
+                for t in turd:
+                    if t != '':
+                        print("OK")
+    # def print_list(list):
+    #     for i in list:
+    #         print(i)
 
     def __str__(self):
         for p in self.places:
-            print(p.name + " | " + p.description)
+            print(p.description)
 
-
-# class Player:
-#     def __init__(self, inventory: list, money: float):
-#         self.money = money
-#         self.inventory = inventory
 
 campaign = Story()
 
+current_node = 0
 
-# Create a new graph
-G = nx.Graph()
+subject = "forest"
 
-G.add_node(campaign.places[0])
-G.add_node(campaign.places[1])
-G.add_edge(campaign.places[0], campaign.places[1])
+# populates the
+campaign.load_csv()
+for node in campaign.places.nodes:
+    print(node)
 
-# Add some nodes
-# for i in range(len(campaign.places) + 1):
-#     G.add_node(campaign.places[i - 1])
-#     G.add
-# Add some edges
-G.add_edge(1, 2)
+# user_input = input("What would you like to do? ").lower()
+#
+# while user_input != "exit":
+#     if user_input == "goto":
+#         subject = int(input("Where would you like to go? "))
+#         if G.has_edge(nodes[current_node], subject):
+#             current_node = nodes.index(subject)
+#             print(f"you are now at {current_node}, {nodes[current_node]}")
+#         else:
+#             print("that place does not exist")
 
-
-# Print the graph
-print(G.nodes())
-# Output: [1, 2, 3]
-
-print(G.edges())
-# Output: [(1, 2), (1, 3), (2, 3)]
+# for node in G.nodes:
+#     print(node)
+#     user_input = input("Where would you like to go?")
+#     if G.has_edge(node, ):
+#         print(node)

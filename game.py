@@ -67,6 +67,7 @@ class Game:
     endgame = False
     win = False
     current_location = "starting"
+    end_location = ""
     death = ""
     win_message = ""
     interfacing = True
@@ -90,7 +91,7 @@ class Game:
             if self.current_location == "lake":
                 self.endgame = True
                 self.death = "You drowned"
-            if self.current_location == "forest":
+            if self.current_location == end_location:
                 self.endgame = True
                 self.win = True
                 self.win_message = "You made it to the magical forest \n"
@@ -179,6 +180,3 @@ class Game:
 
     # see if a bad input could be an attempted command
     # (ex. user typed "gofo", this will suggest "goto" command)
-    # def find_similarity(self, command):
-    #     for c in self.commands:
-    #         if c.

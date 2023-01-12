@@ -1,0 +1,5 @@
+Places,Description,Connections
+road,You are by a road. There is  a forest to the north and a lake to the south.,"forest, lake"
+forest,You are in a forest.,
+lake,"You are by a lake, there is a hut down by the shore.",hut
+hut,You find yourself outside a hut.,
