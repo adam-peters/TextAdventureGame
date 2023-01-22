@@ -1,14 +1,16 @@
 # Author: Adam Peters
-# Date Started
+# Date Started 12/19/22
+# A CSV Text Adventure Game
 
+# imports, plan to add pandas for increased function over csv
 import string
 import networkx as nx
 import csv
 
 
 # A Place Object that is used as node in the story graph
-# currently stores the name and description
-#----------------------------------------------------------------
+# Currently stores the name and description
+# ----------------------------------------------------------------
 # In the future it will store information about the items
 # that can be found there and more
 class Place:
@@ -19,19 +21,24 @@ class Place:
     def __str__(self):
         return f"{self.description}"
 
-# A Story object holds the graph for each seperate text adventure story
+
+# A Story object holds the graph for each separate text adventure story
 # where the nodes are Place Objects
 class Story:
     # Graph to hold each place that you can travel to in the game
     places = nx.Graph()
 
     # Takes a normal (not UTF8), properly formatted (see top) file
+    # Will change to use pandas library
     def load_csv(self):
         with open("./story.csv", 'r') as file:
             csvreader = csv.DictReader(file)
             for row in csvreader:
                 self.places.add_node(Place(row['Places'], row['Description']))
 
+    # Uses the Connections Column in the CSV file to add
+    # edges to the graph where players can travel from their
+    # current location
     def add_edges(self, edges):
         with open("./story.csv", 'r') as file:
             csvreader = csv.DictReader(file)
@@ -40,22 +47,15 @@ class Story:
                 for t in turd:
                     if t != '':
                         print("OK")
-    # def print_list(list):
-    #     for i in list:
-    #         print(i)
 
     def __str__(self):
         for p in self.places:
             print(p.description)
 
 
+# Initializing the game
 campaign = Story()
-
 current_node = 0
-
-subject = "forest"
-
-# populates the
 campaign.load_csv()
 for node in campaign.places.nodes:
     print(node)
